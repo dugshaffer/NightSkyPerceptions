@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Night Sky Perceptions</title>
+<style>
+body { margin: 0; background: black; color: white; }
+canvas { display: block; }
+#hud { position: absolute; bottom: 10px; left: 10px; font-family: monospace; font-size: 12px; color: cyan; }
+</style>
+</head>
+<body>
+<canvas id=sky></canvas>
+<div id=hud>Looking up...</div>
+<script>
+const canvas = document.getElementById('sky');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let plane = { x: 0, y: Math.random() * canvas.height };
+let star = { x: canvas.width, y: Math.random() * canvas.height };
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'red';
+  ctx.beginPath();
+  ctx.arc(plane.x, plane.y, 3, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = 'yellow';
+  ctx.beginPath();
+  ctx.arc(star.x, star.y, 5, 0, Math.PI * 2);
+  ctx.fill();
+  plane.x += 5;
+  if (plane.x > canvas.width) plane.x = -10;
+  star.x += 2;
+  if (star.x > canvas.width) { star.x = 0; star.y = Math.random() * canvas.height; }
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
